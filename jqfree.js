@@ -261,30 +261,30 @@ $.extend({
             type = opts.type || 'GET',
             url = opts.url,
             success = opts.success,
-            error = opts.error;
+            error = opts.error,
+            params;
+        
+        params = (function(obj){
+            var str = '';
+
+            for(var prop in obj){
+                str += prop + '=' + obj[prop] + '&'
+            }
+            str = str.slice(0, str.length - 1);
+            return str;
+        })(opts.data);
         
         type = type.toUpperCase();
-        var fd = new FormData();
-        if (type === 'POST' && opts.data) {
-            //xhr.setRequestHeader('Content-type','application/x-www-four-urlencoded');  
-            for (var key in opts.data) {
-                fd.append(key, JSON.stringify(opts.data[key]));
-            }
-        } else if (type === 'GET') {
-            if (url.indexOf('?') === -1) {
-                url += '?'
-                for (var key in opts.data) {
-                    url += key + '=' + opts.data[key] + '&';
-                }
-                url = url.slice(0, url.length - 1);
-            } else {
-                for (var key in opts.data) {
-                    url += '&' + key + '=' + opts.data[key];
-                }
-            }
+
+        if (type === 'GET') {
+            url += url.indexOf('?') === -1 ? '?' + params : '&' + params;
         }
 
         xhr.open(type, url);
+
+        if (type === 'POST') {
+            xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        }
 
         //onload are executed just after the sync request is comple，
         //please use 'onreadystatechange' if need support IE9-
@@ -296,7 +296,7 @@ $.extend({
             }
             
         };
-        xhr.send(opts.data ? fd : null);
+        xhr.send(params ? params : null);
     },
     jsonp: function (opts) {
         //to produce random string
