@@ -1,0 +1,45 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>jqfree</title>
+    <script src="./jqfree.js"></script>
+</head>
+
+<body>
+    <img src="http://image.zhangxinxu.com/image/study/s/s128/mm1.jpg">
+    <img src="http://image.zhangxinxu.com/image/study/s/s128/mm3.jpg">
+    <p><button>click hide img</button></p>
+    <script>
+        $('button')[0].onclick = function() {
+            $('img').hide(); 
+        };
+
+        //for test ajax function, please start server.js, this is a node web server。
+
+        // $.ajax({
+        //     url: '/test.json',
+        //     type: 'GET',
+        //     data: {
+        //         hehe: 'aa',
+        //         qwe: 'rr'
+        //     },
+        //     success: function (resp) {
+        //         console.log(resp);
+        //     },
+        //     error: function () {
+        //         console.log('error');
+        //     }
+
+        // });
+        // $.jsonp({
+        //     url: 'http://shop.sqaproxy.souche.com/pages/OrderAction/getEntranceShows.jsonp',
+            
+        //     callbackFn: function (resp) {
+        //         console.log(resp);
+        //     }
+        // });
+    </script>
+</body>
+</html>
