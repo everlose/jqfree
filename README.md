@@ -23,7 +23,7 @@ $.fn.init = function(selector, context) {
 $.fn.init.prototype = $.fn;
 ```
 我们需要一个包装着DOM Elements的伪数组，此伪数组对象使用原型链去挂载共享的DOM处理方法，原理如下图。
-![](http://7xn4mw.com1.z0.glb.clouddn.com/16-7-31/35110902.jpg)
+![](http://7xn4mw.com1.z0.glb.clouddn.com/16-7-31/23881940.jpg)
 
 ```
 //选择器
