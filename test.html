@@ -4,41 +4,61 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>jqfree</title>
-    <script src="./jqfree.js"></script>
+    <script src="./dist/jqfree.js"></script>
 </head>
 
 <body>
     <img src="http://image.zhangxinxu.com/image/study/s/s128/mm1.jpg">
     <img src="http://image.zhangxinxu.com/image/study/s/s128/mm3.jpg">
-    <p><button>click hide img</button></p>
+    <div class="test"><button>click hide img</button></div>
+    <ol>
+        <li>test1</li>
+        <li>test2</li>
+        <li>test3</li>
+        <li>test4</li>
+        <li>test5</li>
+    </ol>
     <script>
         $('button')[0].onclick = function() {
             $('img').hide(); 
         };
 
-        //for test ajax function, please start server.js, this is a node web server。
+        //for test ajax function, please run 'node server.js', this is a node web server。
 
         // $.ajax({
-        //     url: '/test.json',
-        //     type: 'post',
-        //     data: {
-        //         hehe: 'aa啊啊',
-        //         qwe: 'rr'
-        //     },
-        //     success: function (resp) {
-        //         console.log(resp);
-        //     },
-        //     error: function () {
-        //         console.log('error');
-        //     }
+        //     url: '/test.json'
+        // })
+        // .then(function (d) {
+        //     console.log(d);
 
+        //     return $.ajax({
+        //         url: '/test.json'
+        //     })
+        // }, function (d) {
+        //     console.log(d);
+        // })
+        // .then(function (d) {
+        //     console.log(d);
+        // }, function (d) {
+        //     console.log(d);
         // });
+        
         // $.jsonp({
-        //     url: 'http://shop.sqaproxy.souche.com/pages/OrderAction/getEntranceShows.jsonp',
-            
-        //     callbackFn: function (resp) {
-        //         console.log(resp);
-        //     }
+        //     url: '/test.json',
+        // })
+        // .then(function (d) {
+        //     console.log(d);
+
+        //     return $.jsonp({
+        //         url: '/test.json'
+        //     })
+        // }, function (d) {
+        //     console.log(d);
+        // })
+        // .then(function (d) {
+        //     console.log(d);
+        // }, function (d) {
+        //     console.log(d);
         // });
     </script>
 </body>

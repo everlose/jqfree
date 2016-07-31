@@ -5,14 +5,41 @@ var $ = function(selector, context) {
 $.fn = $.prototype;
 
 $.fn.init = function(selector, context) {
-    //if selector is a DOM elements, return this elements.
+    //if selector is a DOM elements, like $(document.getElementById('#id'))
     if (selector.nodeType === 1) {
-        return this[0] = selector;
+        this[0] = selector;
+        this.length = 1;
+        return this;
+    } else if (selector.length > 0 && selector[0].nodeType === 1) {
+        //else if selector is a DOM elements Array, like $(document.getElementsByTagName('div'))
+        for (var i = 0, j = selector.length; i < j; i++) {
+            this[i] = selector[i];
+            this.length = i + 1;
+        }
+        return this;
+    } else if (/\<\w+\>/.test(selector)) {
+        //else if, create DOM element if selector container '<...>', like $('<div>test</div>')
+        var parentReg = /\<(\w+)\>(?:[\w\W]+)/,
+            parentMatch = parentReg.exec(selector),
+            parentNode = parentMatch ? parentMatch[1] : '';
+        if (!parentNode) {
+            throw 'the selector can not parse a element';
+        }
+        var contentReg = new RegExp('\<' + parentNode + '\>([\\w\\W]+)\<\/' + parentNode + '\>'),
+            contentMatch = contentReg.exec(selector),
+            contentHTML = contentMatch ? contentMatch[1] : '';
+        var parent = document.createElement(parentNode);
+        parent.innerHTML = contentHTML;
+        this[0] = parent;
+        this.length = 1;
+        return this;
     }
+
     //otherwise use querySelectorAll API。ie8+ Support。
     var parent = context || document; 
     var nodeList = parent.querySelectorAll(selector);
     this.length = nodeList.length;
+    this.selector = selector;
     for (var i=0; i<this.length; i+=1) {
         this[i] = nodeList[i];
     }
@@ -89,22 +116,32 @@ $.fn.extend({
         }
         return this;
     },
+    size: function () {
+        return this.length;
+    },
+
 });
 
 //document processor。
 $.fn.extend({
     append: function (child) {
-        //At present can only insert DOM element
+        if ($.isString(child)) {
+            child = $(child)[0];
+        }
         this.each(function(v, k) {
             v.appendChild(child);
         });
+        child = null;
         return this;
     },
     prepend: function (child) {
-        //At present can only insert DOM element
+        if ($.isString(child)) {
+            child = $(child)[0];
+        }
         this.each(function(v, k) {
-            v.insertBefore(child, v.childNodes[0])
+            v.insertBefore(child, v.childNodes[0]);
         });
+        child = null;
         return this;
     },
     remove: function () {
@@ -113,7 +150,35 @@ $.fn.extend({
         });
         return this;
     },
+    empty: function () {
+        this.each(function(v, k) {
+            v.innerHTML = '';
+        });
+        return this;
+    },
+
     
+});
+
+//DOM element filter
+$.fn.extend({
+    children: function (selector) {
+        return $(selector, this[0]);
+    },
+    parent: function () {
+        return $(this[0].parentElement);
+    },
+    siblings: function () {
+        var n = (this[0].parentElement || {}).firstChild,
+            elem = this[0]
+            matched = [];
+        for ( ; n; n = n.nextSibling ) {
+            if ( n.nodeType === 1 && n !== elem ) {
+                matched.push(n);
+            }
+        }
+        return $(matched);
+    }    
 });
 
 //css
@@ -163,16 +228,16 @@ $.fn.extend({
         });
         return this;
     },
+    hasClass: function (className) {
+        //classList are strong，but IE9 does not support。
+        return this[0].classList.contains(className);;
+    },
     addClass: function (className) {
         this.each(function(v, k) {
             //please use 'v.className += className' if you need support IE9.
             v.classList.add(className);
         });
         return this;
-    },
-    hasClass: function (className) {
-        //classList are strong，but IE9 does not support。
-        return this[0].classList.contains(className);;
     },
     removeClass: function (className) {
         this.each(function(v, k) {
@@ -254,6 +319,80 @@ $.fn.extend({
     },
 });
 
+//this promise code refered to this blog
+//http://www.cnblogs.com/liuzhenwei/p/5235473.html
+var Promise = function (fn) {
+    var state = 'pending';
+    var doneList = [];
+    var failList= [];
+    this.then = function(done ,fail){
+        switch(state){
+            case 'pending':
+                doneList.push(done);
+                //每次如果没有推入fail方法，我也会推入一个null来占位
+                failList.push(fail || null);
+                return this;
+                break;
+            case 'fulfilled':
+                done();
+                return this;
+                break;
+            case 'rejected':
+                fail();
+                return this;
+                break;
+        }
+    }
+    function tryToJson(obj) {
+        var value;
+        try {
+            value = JSON.parse(obj);
+        } catch (e) {
+            value = obj;
+        }
+        return value
+    }
+    function resolve(newValue){
+        state = 'fulfilled';
+        setTimeout(function(){
+            var value = tryToJson(newValue);
+            for (var i = 0; i < doneList.length; i++){
+                var temp = doneList[i](value);
+                if (temp instanceof Promise) {
+                    var newP = temp;
+                    for (i++; i < doneList.length; i++) {
+                        newP.then(doneList[i], failList[i]);
+                    }
+                } else {
+                    value = temp;
+                }
+            }
+        }, 0);
+    }
+    function reject(newValue){
+        state = 'rejected';
+        setTimeout(function(){
+            var value = tryToJson(newValue);
+            var tempRe = failList[0](value);
+            //如果reject里面传入了一个promise，那么执行完此次的fail之后，将剩余的done和fail传入新的promise中
+            if(tempRe instanceof Promise){
+                var newP = tempRe;
+                for (i=1;i<doneList.length;i++) {
+                    newP.then(doneList[i],failList[i]);
+                }
+            } else {
+                //如果不是promise，执行完当前的fail之后，继续执行doneList
+                value = tempRe;
+                doneList.shift();
+                failList.shift();
+                resolve(value);
+            }
+        }, 0);
+    }
+
+    fn(resolve,reject);
+}
+
 //ajax
 $.extend({
     ajax: function (opts) {
@@ -286,17 +425,21 @@ $.extend({
             xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         }
 
-        //onload are executed just after the sync request is comple，
-        //please use 'onreadystatechange' if need support IE9-
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                success(JSON.parse(xhr.response));
-            } else {
-                error(xhr.response);
-            }
-            
-        };
         xhr.send(params ? params : null);
+
+        //return promise
+        return new Promise(function (resolve, reject) {
+            //onload are executed just after the sync request is comple，
+            //please use 'onreadystatechange' if need support IE9-
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    reject(xhr.response);
+                }
+            };
+            
+        });
     },
     jsonp: function (opts) {
         //to produce random string
@@ -307,17 +450,71 @@ $.extend({
         }
         var url = opts.url,
             callbackName = opts.callbackName || 'jsonpCallback' + generateRandomAlphaNum(10),
-            callbackFn = opts.callbackFn;
+            callbackFn = opts.callbackFn || function () {};
         if (url.indexOf('callback') === -1) {
             url += url.indexOf('?') === -1 ? '?callback=' + callbackName :
                 '&callback=' + callbackName;
         }
         var eleScript= document.createElement('script'); 
-        eleScript.type = 'text/javascript'; 
+        eleScript.type = 'text/javascript';
+        eleScript.id = 'jsonp';
         eleScript.src = url;
         document.getElementsByTagName('HEAD')[0].appendChild(eleScript);
 
-        window[callbackName] = callbackFn
 
+        // window[callbackName] = callbackFn;
+        //return promise
+        return new Promise(function (resolve, reject) {
+            window[callbackName] = function (json) {
+                resolve(json);
+            }
+
+            //onload are executed just after the sync request is comple，
+            //please use 'onreadystatechange' if need support IE9-
+            eleScript.onload = function () {
+                //delete the script element when a request done。
+                document.getElementById('jsonp').outerHTML = '';
+                eleScript = null;
+            };
+            eleScript.onerror = function () {
+                document.getElementById('jsonp').outerHTML = '';
+                eleScript = null;
+                reject('error');
+                
+            }
+        });
+    }
+});
+
+
+//cookie
+$.extend({
+    cookie: function (cookieName, cookieValue, day) {
+        var readCookie = function (name) {
+            var arr,
+                reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)'),
+                matched = document.cookie.match(reg);
+            if(arr = matched) {
+                return unescape(arr[2]);
+            } else {
+                return null;
+            }
+        };
+        var setCookie = function (name, value, time) {
+            var Days = time || 30;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+            document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+        };
+        if (cookieName && cookieValue) {
+            //set cookie
+            setCookie(cookieName, cookieValue, day);
+        } else if (cookieName && $.isNull(cookieValue)) {
+            //delete cookie
+            setCookie(cookieName, '', -1);
+        } else if (cookieName) {
+            //read cookie
+            return readCookie(cookieName);
+        }
     }
 });

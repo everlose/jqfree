@@ -4,17 +4,18 @@ var url = require("url");
 var fs = require('fs');
 function start() {
     function onRequest(request, response) {
-        var pathname = url.parse(request.url).pathname;
+        var params = url.parse(request.url, true),
+            pathname = params.pathname;
         //静态资源服务器
         //fs.readFile(filename,[options],callback);
         if (pathname === '/') {
-            fs.readFile(__dirname + '/Main.html', function(err, file){
+            fs.readFile(__dirname + '/Main.html', 'utf-8', function(err, file){
                 if (err) throw err;
-                response.write(file, 'binary');
+                response.write(file, 'utf-8');
                 response.end();
             });
         } else {
-            fs.readFile(__dirname + pathname, 'binary', function(err, file){
+            fs.readFile(__dirname + pathname, 'utf-8', function(err, file){
                 if (err && err.code === 'ENOENT') {
                     response.writeHead(404, {'Content-Type': 'text/plain'});
                     response.write(err + "\n");
@@ -26,6 +27,9 @@ function start() {
                 } else {
                     var type = pathname.slice(pathname.lastIndexOf('.') + 1);
                     switch (type) {
+                        case 'html': 
+                            response.writeHead(200, {'Content-Type': 'text/html'});
+                            break;
                         case 'css':
                             response.writeHead(200, {'Content-Type': 'text/css'});
                             break;
@@ -42,10 +46,18 @@ function start() {
                             response.writeHead(200, {'Content-Type': 'text/xml'});
                             break;
                         default:
+                            response.writeHead(200, {'Content-Type': 'text/plain'});
                             break;
                     }
-                    response.write(file, 'binary');
-                    response.end();
+                    //有callback字段则为jsonp请求。
+                    if (params.query && params.query.callback) {
+                        var str = params.query.callback + '(' + file + ')';
+                        response.write(str, 'utf-8');
+                        response.end();
+                    } else {
+                        response.write(file, 'utf-8');//普通的json 
+                        response.end();
+                    }
                 }
             });
         }
