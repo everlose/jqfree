@@ -1,4 +1,4 @@
-var $ = function(selector, context) {
+window.$ = function(selector, context) {
     return new $.fn.init(selector, context);
 };
 
@@ -519,7 +519,7 @@ $.extend({
     }
 });
 
-//units
+//utils
 $.extend({
     //$.parseTime(new Date().getTime(), 'YYYY-MM-DD hh:mm:ss')
     //result: "2016-08-03 16:14:12"

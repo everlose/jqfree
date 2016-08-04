@@ -1,4 +1,4 @@
-var $ = function(selector, context) {
+window.$ = function(selector, context) {
     return new $.fn.init(selector, context);
 };
 

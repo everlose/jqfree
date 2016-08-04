@@ -19,9 +19,9 @@
         <li>test5</li>
     </ol>
     <script>
-        $('button')[0].onclick = function() {
+        $('button').on('click', function (e) {
             $('img').hide(); 
-        };
+        });
 
         //for test ajax function, please run 'node server.js', this is a node web server。
 
