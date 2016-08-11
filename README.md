@@ -30,7 +30,7 @@ $.fn.init.prototype = $.fn;
 我们需要一个包装着DOM Elements的伪数组，此伪数组对象使用原型链去挂载共享的DOM处理方法，原理如下图。
 ![](http://7xn4mw.com1.z0.glb.clouddn.com/16-7-31/23881940.jpg)
 
-```
+```javascript
 //选择器
 $('body'); //返回$.fn.init {0: body, length: 1, selector: "body"}
 $('.class');
@@ -210,7 +210,7 @@ $('body').hide();
 ## ajax
 抽离jsonp，$.jsonp独立于$.ajax，毕竟jsonp的原理和ajax完全没有关系，如果使用$.ajax的话有些误导别人。
 $.ajax和$.jsonp方法最后都会返回一个Promise对象，。笔者这里直接使用了ES6提供的Promise对象，ES6提供的Promise在chrome从33版开始支持，IE系列并不支持，如果有需要自己写一个Promise的话请打开下面代码中的注释并加入jqfree.js中。此Promise参照了[这里的方案](https://github.com/panyifei/Front-end-learning/blob/master/%E6%A1%86%E6%9E%B6%E4%BB%A5%E5%8F%8A%E8%A7%84%E8%8C%83/Promise.md)。
-```
+```javascript
 /* ES6自带了Promise，有需要理解Promise如何实现的话请看这段注释代码
 var Promise = function (fn) {
     var state = 'pending';
