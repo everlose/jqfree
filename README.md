@@ -104,7 +104,7 @@ $('body').append(element);
 ```javascript
 $.fn.extend({
     css: function (cssRules, value) {
-        //中划线转为驼峰式
+        //cssName need to Converted into camel casing。 
         var transformHump = function (name) {
             return name.replace(/\-(\w)/g, function(all, letter){
                 return letter.toUpperCase();
@@ -112,13 +112,18 @@ $.fn.extend({
         };
         if ($.isString(cssRules)) {
             if ($.isUndefined(value)) {
-                return this[0].style[transformHump(cssRules)];
+                return document.defaultView.getComputedStyle(this[0], null)
+                    .getPropertyValue(cssRules);
             } else {
-                this[0].style[transformHump(cssRules)] = value;
+                this.each(function(v, k) {
+                    v.style[transformHump(cssRules)] = value;
+                });
             }
         } else {
             for (var i in cssRules) {
-                this[0].style[transformHump(i)] = cssRules[i];
+                this.each(function(v, k) {
+                    v.style[transformHump(i)] = cssRules[i];
+                });
             }
         }
         return this;
@@ -128,9 +133,12 @@ $.fn.extend({
 ```
 支持两种写法，参数1和参数2可以互为键值对，或者参数1为一个对象，另外这里只第一个dom元素的css规则生效。调用代码如
 ```javascript
-//设置第一个body元素的color值
-$('body').css('color', '#FFF');
-$('body').css({
+// 获取选中的第一个元素的某个css属性，其属性名不需要驼峰式写法
+$('body').css('font-size');
+
+//设置div元素的css属性。提供了以下两种写法。
+$('div').css('color', '#FFF');
+$('div').css({
     color: '#FFF',
     background: 'green'
 });

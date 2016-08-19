@@ -192,13 +192,18 @@ $.fn.extend({
         };
         if ($.isString(cssRules)) {
             if ($.isUndefined(value)) {
-                return this[0].style[transformHump(cssRules)];
+                return document.defaultView.getComputedStyle(this[0], null)
+                    .getPropertyValue(cssRules);
             } else {
-                this[0].style[transformHump(cssRules)] = value;
+                this.each(function(v, k) {
+                    v.style[transformHump(cssRules)] = value;
+                });
             }
         } else {
             for (var i in cssRules) {
-                this[0].style[transformHump(i)] = cssRules[i];
+                this.each(function(v, k) {
+                    v.style[transformHump(i)] = cssRules[i];
+                });
             }
         }
         return this;
