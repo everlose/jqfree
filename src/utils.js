@@ -59,6 +59,12 @@ $.extend({
     //$.parseTime(new Date().getTime(), 'YYYY-MM-DD hh:mm:ss')
     //result: "2016-08-03 16:14:12"
     parseTime: function (timeStamp, format) {
+        if (!timeStamp || (+timeStamp) !== (+timeStamp)) {
+            return '--';
+        }
+        if (timeStamp.toString().length === 10) {
+            timeStamp = (+timeStamp) * 1000;
+        }
         var date = new Date(timeStamp);
         var o = { 
             'M+' : date.getMonth() + 1, //month 
