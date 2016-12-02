@@ -13,10 +13,18 @@ $.fn.extend({
         });
         return this;
     },
-    trigger: function (type, data) {
-        var event = document.createEvent('HTMLEvents');
-        event.initEvent(type, true, true);
-        event.data = data || {};
+    trigger: function (type) {
+        var event;
+        if (/^mouse|click/.test(name)) {
+            event = document.createEvent('MouseEvents');
+            event.iniMouseEvent(type, true, true);
+        } else if (/^key/.test(name)) {
+            event = document.createEvent('UIEvents');
+            event.iniUIEvent(type, true, true);
+        } else {
+            event = document.createEvent('HTMLEvents');
+            event.initEvent(type, true, true);
+        }
         event.eventName = type;
         event.target = this;
         this.each(function(v, k) {
