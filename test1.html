@@ -1,0 +1,31 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>jqfree</title>
+    <style>
+        body {
+            color: #1A1A1A;
+            font-size: 14px;
+        }
+    </style>
+    <script src="./dist/jqfree.js"></script>
+</head>
+
+<body>
+    test
+    <script>
+        //for test ajax function, please run 'node server.js', this is a node web server。
+
+        $.ajax({
+            url: 'http://oms.sqaproxy.souche.com/shop/shopaction/getShopCodeList.json'
+        })
+        .then(d => {
+            console.log(d);
+        }, d => {
+            console.log(d);
+        });
+    </script>
+</body>
+</html>

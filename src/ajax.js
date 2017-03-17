@@ -1,8 +1,8 @@
 //ajax
 $.extend({
     ajax: function (opts) {
-        var xhr = new XMLHttpRequest(),
-            type = opts.type || 'GET',
+        
+        var type = opts.type || 'GET',
             url = opts.url,
             params = opts.data,
             dataType = opts.dataType || 'json';
@@ -22,6 +22,24 @@ $.extend({
             url += url.indexOf('?') === -1 ? '?' + params : '&' + params;
         }
 
+        // fetch api，不过fetchapi的数据比xhr请求的数据多包了一层。
+        // if (fetch) {
+        //     var fetchParams = {
+        //         method: type
+        //     };
+        //     if (type === 'POST') {
+        //         fetchParams.body = params;
+        //     }
+        //     if (opts.contentType) {
+        //         fetchParams.headers['Content-Type'] = opts.contentType;
+        //     }
+        //     if (opts.dataType) {
+        //         fetchParams.headers['Accept'] = opts.dataType;
+        //     }
+        //     return fetch(opts.url, fetchParams);
+        // }
+
+        var xhr = new XMLHttpRequest();
         xhr.open(type, url);
 
         if (opts.contentType) {

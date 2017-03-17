@@ -9,7 +9,7 @@ function start() {
         //静态资源服务器
         //fs.readFile(filename,[options],callback);
         if (pathname === '/') {
-            fs.readFile(__dirname + '/Main.html', 'utf-8', function(err, file){
+            fs.readFile(__dirname + '/test1.html', 'utf-8', function(err, file){
                 if (err) throw err;
                 response.write(file, 'utf-8');
                 response.end();
