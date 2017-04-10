@@ -1,18 +1,6 @@
-$.extend = $.fn.extend = function (destination, source) {
-    //if source is not exist，copy the destination to this。
-    if (typeof source === 'undefined') {
-        source = destination;
-        destination = this;
-    }
-    for (var property in source) {
-        if (source.hasOwnProperty(property)) {
-            destination[property] = source[property];
-        }
-    }
-    return destination;
-};
+//添加了变量类型判断、时间解析函数、url解析函数、浮点数四舍五入小数位和获取随机位数字符串的辅助函数
 
-$.extend({
+module.exports = {
     isUndefined: function(obj) {
         return obj === void 0;
     },
@@ -53,9 +41,7 @@ $.extend({
         for (var key in obj) if ($.has(obj, key)) return false;
         return true;
     },
-});
 
-$.extend({
     //$.parseTime(new Date().getTime(), 'YYYY-MM-DD hh:mm:ss')
     //result: "2016-08-03 16:14:12"
     parseTime: function (timeStamp, format) {
@@ -66,27 +52,27 @@ $.extend({
             timeStamp = (+timeStamp) * 1000;
         }
         var date = new Date(timeStamp);
-        var o = { 
-            'M+' : date.getMonth() + 1, //month 
-            'D+' : date.getDate(), //day 
-            'h+' : date.getHours(), //hour 
-            'm+' : date.getMinutes(), //minute 
-            's+' : date.getSeconds(), //second 
-            'S' : date.getMilliseconds() //millisecond 
-        } 
+        var o = {
+            'M+' : date.getMonth() + 1, //month
+            'D+' : date.getDate(), //day
+            'h+' : date.getHours(), //hour
+            'm+' : date.getMinutes(), //minute
+            's+' : date.getSeconds(), //second
+            'S' : date.getMilliseconds() //millisecond
+        }
 
-        if(/(Y+)/.test(format)) { 
-            format = format.replace(RegExp.$1, 
-                (date.getFullYear() + '').substr(4 - RegExp.$1.length)); 
-        } 
+        if(/(Y+)/.test(format)) {
+            format = format.replace(RegExp.$1,
+                (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+        }
 
-        for(var k in o) { 
-            if (new RegExp('('+ k +')').test(format)) { 
-                format = format.replace(RegExp.$1, 
-                    RegExp.$1.length == 1 ? o[k] : ('00'+ o[k]).substr((''+ o[k]).length)); 
-            } 
-        } 
-        return format; 
+        for(var k in o) {
+            if (new RegExp('('+ k +')').test(format)) {
+                format = format.replace(RegExp.$1,
+                    RegExp.$1.length == 1 ? o[k] : ('00'+ o[k]).substr((''+ o[k]).length));
+            }
+        }
+        return format;
     },
 
     //$.parseUrl(location.href)
@@ -134,4 +120,4 @@ $.extend({
         for (; rdmString.length < len; rdmString += Math.random().toString(36).substr(2));
         return rdmString.substr(0, len);
     }
-});
+};

@@ -1,4 +1,6 @@
-$.fn.extend({
+//添加了dom过滤的几个函数，如children、parent、siblings。返回出去的DOM对象会再次被$.fn.init对象包装。
+
+module.exports = {
     children: function (selector) {
         return $(selector, this[0]);
     },
@@ -15,5 +17,5 @@ $.fn.extend({
             }
         }
         return $(matched);
-    }    
-});
+    }
+};

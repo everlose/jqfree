@@ -1,5 +1,5 @@
 //effect
-$.fn.extend({
+module.exports = {
     hide: function () {
         this.each(function() {
            this.style.display = 'none';
@@ -12,4 +12,4 @@ $.fn.extend({
         });
         return this;
     },
-});
+};

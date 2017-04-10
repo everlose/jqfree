@@ -1,5 +1,5 @@
-//cookie
-$.extend({
+//将增删改查cookie操作都用一个函数搞定
+module.exports = {
     cookie: function (cookieName, cookieValue, day) {
         var readCookie = function (name) {
             var arr,
@@ -28,4 +28,4 @@ $.extend({
             return readCookie(cookieName);
         }
     }
-});
+};

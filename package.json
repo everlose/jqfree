@@ -1,0 +1,10 @@
+{
+    "name": "jqfree",
+    "version": "0.0.2",
+    "description": "this is an imitation jquery",
+    "author": "chenziyun <ever-lose@foxmail.com>",
+    "main": "src/main.js",
+    "scripts": {
+        "build": "webpack"
+    }
+}

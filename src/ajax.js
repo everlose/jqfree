@@ -1,7 +1,7 @@
-//ajax
-$.extend({
+//ajax，抽离jsonp，$.jsonp独立于$.ajax，毕竟jsonp的原理和ajax完全没有关系，如果使用$.ajax的话有些误导别人
+module.exports = {
     ajax: function (opts) {
-        
+
         var type = opts.type || 'GET',
             url = opts.url,
             params = opts.data,
@@ -65,7 +65,7 @@ $.extend({
                     reject(xhr.response);
                 }
             };
-            
+
         });
     },
     jsonp: function (opts) {
@@ -94,7 +94,7 @@ $.extend({
             })(opts.data);
             url += '&' + params;
         }
-        var eleScript= document.createElement('script'); 
+        var eleScript= document.createElement('script');
         eleScript.type = 'text/javascript';
         eleScript.id = 'jsonp';
         eleScript.src = url;
@@ -119,8 +119,8 @@ $.extend({
                 document.getElementById('jsonp').outerHTML = '';
                 eleScript = null;
                 reject('error');
-                
+
             }
         });
     }
-});
+};

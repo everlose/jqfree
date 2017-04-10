@@ -1,5 +1,5 @@
-//document processor。
-$.fn.extend({
+//dom操作，增删改查
+module.exports = {
     append: function (child) {
         if ($.isString(child)) {
             child = $(child)[0];
@@ -32,4 +32,4 @@ $.fn.extend({
         });
         return this;
     },
-});
+};

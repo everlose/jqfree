@@ -1,5 +1,5 @@
-//attributes
-$.fn.extend({
+//获取属性，实现了attr，removeAttr，addClass，hasClass，removeClass，data，html这几个api，功能和jq相似。 拿addClass举例来说，classList为H5的API，不支持IE9及以下。所有被匹配的dom元素都会被addClass处理。
+module.exports = {
     attr: function (attrName, attrValue) {
         if (!$.isUndefined(attrValue)) {
             if (attrName === 'value' || attrName === 'href') {
@@ -51,9 +51,9 @@ $.fn.extend({
             } catch (e) {
                 return this[0].dataset[dataName]
             }
-             
+
         }
-        
+
     },
     html: function (htmlText) {
         if ($.isUndefined(htmlText)) {
@@ -64,4 +64,4 @@ $.fn.extend({
             });
         }
     },
-});
+};

@@ -10,7 +10,8 @@
             font-size: 14px;
         }
     </style>
-    <script src="./dist/jqfree.js"></script>
+    <!-- <script src="./dist/jqfree.js"></script> -->
+    <script src="../dist/bundle.js"></script>
 </head>
 
 <body>
@@ -26,19 +27,19 @@
     </ol>
     <script>
         $('button').on('click', function (e) {
-            $('img').hide(); 
+            $('img').hide();
         });
 
         //for test ajax function, please run 'node server.js', this is a node web server。
 
         // $.ajax({
-        //     url: '/test.json'
+        //     url: '/demo/test.json'
         // })
         // .then(function (d) {
         //     console.log(d);
 
         //     return $.ajax({
-        //         url: '/test.json'
+        //         url: '/demo/test.json'
         //     })
         // }, function (d) {
         //     console.log(d);
@@ -48,15 +49,15 @@
         // }, function (d) {
         //     console.log(d);
         // });
-        
+
         // $.jsonp({
-        //     url: '/test.json',
+        //     url: '/demo/test.json',
         // })
         // .then(function (d) {
         //     console.log(d);
 
         //     return $.jsonp({
-        //         url: '/test.json'
+        //         url: '/demo/test.json'
         //     })
         // }, function (d) {
         //     console.log(d);

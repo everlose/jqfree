@@ -1,5 +1,5 @@
 //event
-$.fn.extend({
+module.exports = {
     on: function (event, func) {
         this.each(function(v, k) {
             //dom level 2，IE8 not support。
@@ -32,4 +32,4 @@ $.fn.extend({
         });
         return this;
     }
-});
+};

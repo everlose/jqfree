@@ -1,6 +1,8 @@
-$.fn.extend({
+//添加了css的方法，功用同原版jquery。现将css规则转为驼峰式，然后利用style属性插入，如background-color: #FFF，会被当作dom.style.backgroundColor = '#FFF'这样的插入。
+
+module.exports = {
     css: function (cssRules, value) {
-        //cssName need to Converted into camel casing。 
+        //cssName need to Converted into camel casing。
         var transformHump = function (name) {
             return name.replace(/\-(\w)/g, function(all, letter){
                 return letter.toUpperCase();
@@ -25,4 +27,4 @@ $.fn.extend({
         return this;
 
     },
-});
+};
