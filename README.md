@@ -5,7 +5,7 @@
 1. `git clone` 下来项目
 2. 运行 `npm install` 安装依赖
 3. 运行 `npm run dev` 启动项目
-4. 输入 `localhost:8088/test.html` 访问第一个测试页面
+4. 输入 `localhost:8088/index.html` 访问第一个测试页面
 
 ## 项目目录说明
 
