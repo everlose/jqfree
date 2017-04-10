@@ -1,4 +1,43 @@
+# 项目说明
+
+## 项目启动步骤
+
+1. `git clone` 下来项目
+2. 运行 `npm install` 安装依赖
+3. 运行 `npm run dev` 启动项目
+4. 输入 `localhost:8088/test.html` 访问第一个测试页面
+
+## 项目目录说明
+
+```
+|____demo  demo目录
+| |____index.html  测试页面
+| |____api.json  测试接口返回数据
+|____dist  源代码编译后的生成文件的目录
+| |____bundle.js  生成的js文件
+|____package.json
+|____README.md
+|____src
+| |____ajax.js  ajax函数库
+| |____attributes.js  dom的属性的增删改查函数
+| |____cookie.js  cookie操作函数
+| |____core.js  jqfree核心函数
+| |____css.js  dom元素上的css样式操作函数
+| |____dom.js  dom元素自身的增删改函数
+| |____effect.js  dom元素的展现特效，这里没有加入动画，只有show和hide两个方法
+| |____events.js  dom的事件的绑定、解绑、触发函数
+| |____filter.js  dom元素的过滤查找函数
+| |____init.js  初始化jqfree对象的函数
+| |____main.js  打包代码的入口文件
+| |____traverse.js  dom元素遍历的函数
+| |____utils.js  工具函数
+|____webpack.config.js  webpack配置函数
+
+```
+
+
 # jqfree
+
 this is an imitation jquery, it has fewer fuctions, but only 400+ lines of code. jqfree can not be used in project, we just take few time to do some research and practice about jquery。
 
 ## jqfree core

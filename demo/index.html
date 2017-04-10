@@ -30,34 +30,34 @@
             $('img').hide();
         });
 
-        //for test ajax function, please run 'node server.js', this is a node web server。
+        //for test ajax function, please run 'npm run dev', this is a node web server。
 
-        // $.ajax({
-        //     url: '/demo/test.json'
-        // })
-        // .then(function (d) {
-        //     console.log(d);
+        $.ajax({
+            url: '/api.json'
+        })
+        .then(function (d) {
+            console.log(d);
 
-        //     return $.ajax({
-        //         url: '/demo/test.json'
-        //     })
-        // }, function (d) {
-        //     console.log(d);
-        // })
-        // .then(function (d) {
-        //     console.log(d);
-        // }, function (d) {
-        //     console.log(d);
-        // });
+            return $.ajax({
+                url: '/api.json'
+            })
+        }, function (d) {
+            console.log(d);
+        })
+        .then(function (d) {
+            console.log(d);
+        }, function (d) {
+            console.log(d);
+        });
 
         // $.jsonp({
-        //     url: '/demo/test.json',
+        //     url: '/api.json',
         // })
         // .then(function (d) {
         //     console.log(d);
 
         //     return $.jsonp({
-        //         url: '/demo/test.json'
+        //         url: '/api.json'
         //     })
         // }, function (d) {
         //     console.log(d);

@@ -5,6 +5,11 @@
     "author": "chenziyun <ever-lose@foxmail.com>",
     "main": "src/main.js",
     "scripts": {
-        "build": "webpack"
+        "build": "webpack",
+        "dev": "webpack-dev-server"
+    },
+    "devDependencies": {
+        "webpack": "^1.13.2",
+        "webpack-dev-server": "^1.16.2"
     }
 }
