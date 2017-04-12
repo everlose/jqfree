@@ -2,9 +2,8 @@
 
 module.exports = {
     each: function (func) {
-        var i=0,
-            length = this.length;
-        for (; i<length; i+=1) {
+        var length = this.length;
+        for (var i = 0; i < length; i++) {
             func.call(this[i], this[i], i);
         }
         return this;

@@ -1,21 +1,23 @@
 //dom操作，增删改查
 module.exports = {
     append: function (child) {
-        if ($.isString(child)) {
-            child = $(child)[0];
-        }
         this.each(function(v, k) {
-            v.appendChild(child);
+            if ($.isString(child)) {
+                v.innerHTML += child
+            } else if (child.nodeType === 1) {
+                v.appendChild(child);
+            }
         });
         child = null;
         return this;
     },
     prepend: function (child) {
-        if ($.isString(child)) {
-            child = $(child)[0];
-        }
         this.each(function(v, k) {
-            v.insertBefore(child, v.childNodes[0]);
+            if ($.isString(child)) {
+                v.innerHTML = child + v.innerHTML;
+            } else if (child.nodeType === 1) {
+                v.insertBefore(child, v.childNodes[0]);
+            }
         });
         child = null;
         return this;
@@ -23,6 +25,7 @@ module.exports = {
     remove: function () {
         this.each(function(v, k) {
             v.parentNode.removeChild(v);
+            v = null;
         });
         return this;
     },
@@ -32,4 +35,13 @@ module.exports = {
         });
         return this;
     },
+    html: function (htmlText) {
+        if ($.isUndefined(htmlText)) {
+            return this[0].innerHTML;
+        } else {
+            this.each(function(v, k) {
+                v.innerHTML = htmlText;
+            });
+        }
+    }
 };

@@ -54,14 +54,5 @@ module.exports = {
 
         }
 
-    },
-    html: function (htmlText) {
-        if ($.isUndefined(htmlText)) {
-            return this[0].innerHTML;
-        } else {
-            this.each(function(v, k) {
-                v.innerHTML = htmlText;
-            });
-        }
-    },
+    }
 };
