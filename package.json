@@ -1,15 +1,19 @@
 {
-    "name": "jqfree",
-    "version": "0.0.2",
-    "description": "this is an imitation jquery",
-    "author": "chenziyun <ever-lose@foxmail.com>",
-    "main": "src/main.js",
-    "scripts": {
-        "build": "webpack",
-        "dev": "webpack-dev-server"
-    },
-    "devDependencies": {
-        "webpack": "^1.13.2",
-        "webpack-dev-server": "^1.16.2"
-    }
+  "name": "jqfree",
+  "version": "0.0.2",
+  "description": "this is an imitation jquery",
+  "author": "chenziyun <ever-lose@foxmail.com>",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "chai": "~3.4.1",
+    "jsdom": "^9.12.0",
+    "mocha": "~2.3.4",
+    "mocha-jsdom": "^1.1.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2"
+  }
 }

@@ -5,10 +5,14 @@ module.exports = {
         filename: './dist/bundle.js'
     },
     devServer: {
-        contentBase: "./demo",
+        contentBase: "./test/",
         colors: true,
         historyApiFallback: true,
         inline: true,
-        port: '8088'
+        port: '8088',
+        //自动打开浏览器
+        open: {
+            type: true
+        }
     }
 };

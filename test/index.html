@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jqfree单元测试</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="mocha.css" />
+    </head>
+    <body>
+        <div id="mocha">
+            <p class="paragraph">单元测试页面</p>
+            <ul class="list">
+                <li class="list-item">list-item 1</li>
+                <li class="list-item">list-item 2</li>
+                <li class="list-item">list-item 3</li>
+            </ul>
+        </div>
+        <script src="../dist/bundle.js"></script>
+        <script src="mocha.js"></script>
+        <script>mocha.setup('bdd');</script>
+        <script src="http://chaijs.com/chai.js"></script>
+        <script src="tests.js"></script>
+        <script>
+            mocha.run();
+        </script>
+    </body>
+</html>

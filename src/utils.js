@@ -46,7 +46,7 @@ module.exports = {
     //result: "2016-08-03 16:14:12"
     parseTime: function (timeStamp, format) {
         if (!timeStamp || (+timeStamp) !== (+timeStamp)) {
-            return '--';
+            return '';
         }
         if (timeStamp.toString().length === 10) {
             timeStamp = (+timeStamp) * 1000;
