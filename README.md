@@ -4,7 +4,8 @@
 
 1. `git clone` 下来项目
 2. 运行 `npm install` 安装依赖
-3. 运行 `npm run test` 启动项目，并自动访问 `localhost:8088/index.html`
+3. 全局环境依赖有webpack和webpack-dev-server，没有装过的同学需要 `npm install -g webpack` 和 `npm install -g webpack-dev-server`
+4. 运行 `npm run test` 启动项目，并自动访问 `localhost:8088/index.html`
 
 ## 项目目录说明
 

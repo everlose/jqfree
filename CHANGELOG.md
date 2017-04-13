@@ -20,3 +20,4 @@
 - 修改 init 初始化 jqfree 函数，关于 `$('<p class="p">test</p>')` 这样的输入所作的判断逻辑。
 - 修改 dom.js 里的 `append()` 方法和 `prepend()` 方法
 - 追加 `test.js` 里的 `init` `traverse` `dom` 的三个单元测试
+- 追加 `test.js` 里的 `css` `attributes` `events` `effect` `ajax` `cookie` 的六个单元测试

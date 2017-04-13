@@ -1,5 +1,6 @@
 //event
 module.exports = {
+    //事件委托，待处理
     on: function (event, func) {
         this.each(function(v, k) {
             //dom level 2，IE8 not support。
