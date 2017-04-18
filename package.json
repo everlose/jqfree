@@ -1,6 +1,6 @@
 {
   "name": "jqfree",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "this is an imitation jquery",
   "author": "chenziyun <ever-lose@foxmail.com>",
   "main": "src/main.js",
