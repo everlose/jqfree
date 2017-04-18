@@ -217,3 +217,115 @@ describe('cookie：cookie操作', function() {
     });
 });
 
+describe('utils：工具库函数', function() {
+    it('isUndefined是否是undefined类型', function() {
+        expect($.isUndefined(undefined)).to.be.equal(true);
+        expect($.isUndefined(null)).to.be.equal(false);
+    });
+    it('isNull是否是null类型', function() {
+        expect($.isNull(undefined)).to.be.equal(false);
+        expect($.isNull(null)).to.be.equal(true);
+    });
+    it('isBoolean是否是布尔类型', function() {
+        var bool = new Boolean(false);
+        expect($.isBoolean(false)).to.be.equal(true);
+        expect($.isBoolean(true)).to.be.equal(true);
+        expect($.isBoolean(bool)).to.be.equal(true);
+        expect($.isBoolean('true')).to.be.equal(false);
+    });
+    it('isNumber是否是数值类型', function() {
+        var num = new Number(12);
+        expect($.isNumber(1)).to.be.equal(true);
+        expect($.isNumber(num)).to.be.equal(true);
+        expect($.isNumber(NaN)).to.be.equal(true);
+        expect($.isNumber('1')).to.be.equal(false);
+    });
+    it('isString是否是字符串类型', function() {
+        var str = new String('string');
+        expect($.isString('string')).to.be.equal(true);
+        expect($.isString(str)).to.be.equal(true);
+        expect($.isString('')).to.be.equal(true);
+        expect($.isString(1)).to.be.equal(false);
+    });
+    it('isNaN是否是非数', function() {
+        expect($.isNaN(NaN)).to.be.equal(true);
+        expect($.isNaN({})).to.be.equal(false);
+        expect($.isNaN(1)).to.be.equal(false);
+        expect($.isNaN('1')).to.be.equal(false);
+    });
+    it('isFunction是否是函数', function() {
+        var fn = function () {};
+        var fn1 = new Function ('console.log(11)');
+        expect($.isFunction(fn)).to.be.equal(true);
+        expect($.isFunction(fn1)).to.be.equal(true);
+        expect($.isFunction({})).to.be.equal(false);
+    });
+    it('isDate是否是date类型', function() {
+        var date = new Date();
+        expect($.isDate(date)).to.be.equal(true);
+        expect($.isDate({})).to.be.equal(false);
+        expect($.isDate('2017-01-01')).to.be.equal(false);
+    });
+    it('isArray是否是数组类型', function() {
+        var arr = new Array();
+        expect($.isArray(arr)).to.be.equal(true);
+        expect($.isArray([])).to.be.equal(true);
+        expect($.isArray({})).to.be.equal(false);
+    });
+    it('isObject是否是基础对象类型，并且非array，date，function', function() {
+        var obj = new Object();
+        var date = new Date();
+        var fn = function () {};
+        expect($.isObject(obj)).to.be.equal(true);
+        expect($.isObject({})).to.be.equal(true);
+        expect($.isObject([])).to.be.equal(false);
+        expect($.isObject(date)).to.be.equal(false);
+        expect($.isObject(fn)).to.be.equal(false);
+    });
+    it('has是否对象里有某属性，不算原型链上的', function() {
+        var obj = {
+            a: 1,
+            b: 2
+        };
+        expect($.has(obj, 'a')).to.be.equal(true);
+        expect($.has(obj, 'b')).to.be.equal(true);
+        expect($.has(obj, 'toString')).to.be.equal(false);
+    });
+    it('isEmpty检查对象、数组或字符串内容是否为空', function() {
+        var obj = {};
+        var arr = [];
+        var str = '';
+        expect($.isEmpty(obj)).to.be.equal(true);
+        expect($.isEmpty(arr)).to.be.equal(true);
+        expect($.isEmpty(str)).to.be.equal(true);
+        obj.a = 1;
+        arr.push(1);
+        str += '123';
+        expect($.isEmpty(obj)).to.be.equal(false);
+        expect($.isEmpty(arr)).to.be.equal(false);
+        expect($.isEmpty(str)).to.be.equal(false);
+    });
+    it('parseTime格式化日期函数，第一个参数为时间戳，可以以秒为单位', function() {
+        var time = new Date('2017/04/18 11:04:53').getTime();
+        expect($.parseTime(time, 'YYYY-MM-DD')).to.be.equal('2017-04-18');
+        expect($.parseTime(time, 'YYYY-MM-DD hh:mm:ss')).to.be.equal('2017-04-18 11:04:53');
+        expect($.parseTime(null, 'YYYY-MM-DD')).to.be.equal('');
+        expect($.parseTime(undefined, 'YYYY-MM-DD')).to.be.equal('');
+        expect($.parseTime(NaN, 'YYYY-MM-DD')).to.be.equal('');
+    });
+    it('parseUrl转化处理url', function() {
+        var urlObj = $.parseUrl('http://www.test.com/page.html?param1=xxx&param2=yyy');
+        expect(urlObj.host).to.be.equal('www.test.com');
+        expect(urlObj.params.param1).to.be.equal('xxx');
+        expect(urlObj.params.param2).to.be.equal('yyy');
+    });
+    it('toFixedFloat四舍五入浮点数并保留一定位数的函数', function() {
+        var test1 = $.toFixedFloat(0.1 + 0.2, 3);
+        var test2 = $.toFixedFloat(15.658, 2);
+        //最多保留3位，不过小数点后两位为0，去掉了
+        expect(test1).to.be.equal('0.3');
+        expect(test2).to.be.equal('15.66');
+    });
+
+});
+

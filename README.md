@@ -7,6 +7,10 @@
 3. 全局环境依赖有webpack和webpack-dev-server，没有装过的同学需要 `npm install -g webpack` 和 `npm install -g webpack-dev-server`
 4. 运行 `npm run test` 启动项目，并自动访问 `localhost:8088/index.html`
 
+可以看到首页运行了单元测试的结果
+
+![](http://i1.piimg.com/567571/cdf9d092abe68161.png)
+
 ## 项目目录说明
 
 ```

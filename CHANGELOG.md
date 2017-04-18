@@ -21,3 +21,4 @@
 - 修改 dom.js 里的 `append()` 方法和 `prepend()` 方法
 - 追加 `test.js` 里的 `init` `traverse` `dom` 的三个单元测试
 - 追加 `test.js` 里的 `css` `attributes` `events` `effect` `ajax` `cookie` 的六个单元测试
+- 追加 `test.js` 里的 `utils` 的单元测试

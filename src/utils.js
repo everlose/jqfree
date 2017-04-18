@@ -20,7 +20,7 @@ module.exports = {
         return obj !== obj;
     },
     isFunction: function(obj) {
-        return typeof obj === 'function';
+        return Object.prototype.toString.call(obj) === '[object Function]';
     },
     isDate: function(obj) {
         return Object.prototype.toString.call(obj) === '[object Date]';
