@@ -12,21 +12,26 @@ module.exports = function(selector, context) {
             this.length = i + 1;
         }
         return this;
-    } else if (/\<\w+\>/.test(selector)) {
+    } else if (/<[\s\S]+>/.test(selector)) {
         //else if, create DOM element if selector container '<...>', like $('<div>test</div>')
-        var parentReg = /\<(\w+)\>(?:[\w\W]+)/,
-            parentMatch = parentReg.exec(selector),
-            parentNode = parentMatch ? parentMatch[1] : '';
-        if (!parentNode) {
-            throw 'the selector can not parse a element';
+        // var parentReg = /<(\w+)[\s\S]*>([\s\S]*)<\/[\s\S]+>/;
+        // var parentMatch = parentReg.exec(selector);
+        // var parentNode = parentMatch ? parentMatch[1] : '';
+        // if (!parentNode) {
+        //     throw 'the selector: "' + selector + '" can not parse a element';
+        // }
+        // var contentHTML = parentMatch[2];
+        // var parent = document.createElement(parentNode);
+        // parent.innerHTML = contentHTML;
+        // this[0] = parent;
+        // this.length = 1;
+        //ie 9+，Firefox 12.0，chrome ok。
+        var parser = new DOMParser();
+        var dom = parser.parseFromString(selector, 'text/xml').children;
+        for (var i = 0, j = dom.length; i < j; i++) {
+            this[i] = dom[i];
+            this.length = i + 1;
         }
-        var contentReg = new RegExp('\<' + parentNode + '\>([\\w\\W]+)\<\/' + parentNode + '\>'),
-            contentMatch = contentReg.exec(selector),
-            contentHTML = contentMatch ? contentMatch[1] : '';
-        var parent = document.createElement(parentNode);
-        parent.innerHTML = contentHTML;
-        this[0] = parent;
-        this.length = 1;
         return this;
     }
 

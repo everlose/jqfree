@@ -4,19 +4,18 @@
 
 1. `git clone` 下来项目
 2. 运行 `npm install` 安装依赖
-3. 运行 `npm run dev` 启动项目
-4. 输入 `localhost:8088/index.html` 访问第一个测试页面
+3. 全局环境依赖有webpack和webpack-dev-server，没有装过的同学需要 `npm install -g webpack` 和 `npm install -g webpack-dev-server`
+4. 运行 `npm run test` 启动项目，并自动访问 `localhost:8088/index.html`
+
+可以看到首页运行了单元测试的结果
+
+![](http://7xn4mw.com1.z0.glb.clouddn.com/17-4-18/48420565-file_1492498919162_27af.png)
 
 ## 项目目录说明
 
 ```
-|____demo  demo目录
-| |____index.html  测试页面
-| |____api.json  测试接口返回数据
 |____dist  源代码编译后的生成文件的目录
 | |____bundle.js  生成的js文件
-|____package.json
-|____README.md
 |____src
 | |____ajax.js  ajax函数库
 | |____attributes.js  dom的属性的增删改查函数
@@ -31,6 +30,15 @@
 | |____main.js  打包代码的入口文件
 | |____traverse.js  dom元素遍历的函数
 | |____utils.js  工具函数
+|____test  单测目录
+| |____api.json  测试接口返回数据
+| |____index.html  测试页面，也是 `localhost:8088/index.html` 页面入口
+| |____mocha.css  mocha框架带的样式，不需要更改
+| |____mocha.js  mocha框架带的脚本，不需要更改
+| |____test.js  单元测试的脚本文件
+|____CHANGELOG.md  项目变更记录
+|____package.json
+|____README.md
 |____webpack.config.js  webpack配置函数
 
 ```

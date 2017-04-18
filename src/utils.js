@@ -20,7 +20,7 @@ module.exports = {
         return obj !== obj;
     },
     isFunction: function(obj) {
-        return typeof obj === 'function';
+        return Object.prototype.toString.call(obj) === '[object Function]';
     },
     isDate: function(obj) {
         return Object.prototype.toString.call(obj) === '[object Date]';
@@ -46,7 +46,7 @@ module.exports = {
     //result: "2016-08-03 16:14:12"
     parseTime: function (timeStamp, format) {
         if (!timeStamp || (+timeStamp) !== (+timeStamp)) {
-            return '--';
+            return '';
         }
         if (timeStamp.toString().length === 10) {
             timeStamp = (+timeStamp) * 1000;
