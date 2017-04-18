@@ -9,7 +9,7 @@
 
 可以看到首页运行了单元测试的结果
 
-![](http://i1.piimg.com/567571/cdf9d092abe68161.png)
+![](http://7xn4mw.com1.z0.glb.clouddn.com/17-4-18/48420565-file_1492498919162_27af.png)
 
 ## 项目目录说明
 
